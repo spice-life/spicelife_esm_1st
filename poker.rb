@@ -7,9 +7,6 @@ class Poker
   def initialize
     @player1 = Player.new
   end
-
-  def kubaru
-  end
 end
 
 class Player
@@ -47,5 +44,11 @@ RSpec.describe Card do
   describe '.new' do
     it { expect(subject.suit).to eq(:heart) }
     it { expect(subject.number).to eq(10) }
+  end
+end
+
+RSpec.describe Dealer do
+  describe '#execute' do
+
   end
 end
