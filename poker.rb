@@ -47,17 +47,18 @@ RSpec.describe YakuwakaruMan do
   end
 
   describe '#four_of_kind' do
-    pending 'wip'
-
+    let(:any_card) { Card.new(number: 9, suit: :dia) }
     let(:yakuwakaruman) {
       YakuwakaruMan.new(
         Card::SUITES.map {|suit|
           Card.new(number: 1, suit: suit)
-        }
-      end
+        } << any_card
+      )
     }
 
-    # it { expect() }
+    subject { yakuwakaruman }
+
+    it { is_expected.to be_four_of_kind }
   end
 end
 
