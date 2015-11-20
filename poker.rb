@@ -43,11 +43,10 @@ class YakuwakaruMan
     numbers = @cards.map(&:number)
     hash = Hash.new 0
     numbers.each do |n|
-      hash[n] +=1
+      hash[n] += 1
     end
-    return true hash.values == [3,2]
-    return true hash.values == [2, 3]
-    return false
+
+    hash.values.sort == [2, 3]
   end
 
   def three_of_kind?
@@ -96,7 +95,7 @@ RSpec.describe YakuwakaruMan do
 
   end
 
-  describe '#four_of_kind' do
+  shared_context '役が4カード' do
     let(:any_card) { Card.new(number: 9, suit: :dia) }
     let(:yakuwakaruman) {
       YakuwakaruMan.new(
@@ -107,8 +106,18 @@ RSpec.describe YakuwakaruMan do
     }
 
     subject { yakuwakaruman }
+  end
+
+  describe '#four_of_kind' do
+    include_context '役が4カード'
 
     it { is_expected.to be_four_of_kind }
+  end
+
+  describe '#wakaru' do
+    include_context '役が4カード'
+
+    it { is_expected.to wakaru }
   end
 end
 
