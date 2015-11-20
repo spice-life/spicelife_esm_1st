@@ -40,7 +40,14 @@ class YakuwakaruMan
   end
 
   def full_house?
-    true
+    numbers = @cards.map(&:number)
+    hash = Hash.new 0
+    numbers.each do |n|
+      hash[n] +=1
+    end
+    return true hash.values == [3,2]
+    return true hash.values == [2, 3]
+    return false
   end
 
   def three_of_kind?
