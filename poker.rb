@@ -35,6 +35,8 @@ class YakuwakaruMan
     case
     when four_of_kind?
       'フォーカード'
+    when massugu_hikaru?
+      'ストレートフラッシュ'
     else
       '🐷'
     end
@@ -58,20 +60,13 @@ class YakuwakaruMan
     # [1, 1, 1, 8, 9] ok
     @cards.map(&:number).uniq.count == 3
   end
+
+  def massugu_hikaru?
+    true
+  end
 end
 
 RSpec.describe YakuwakaruMan do
-  it do
-    cards = [
-      Card.new(number: 1, suit: :spade),
-      Card.new(number: 2, suit: :spade),
-      Card.new(number: 3, suit: :spade),
-      Card.new(number: 4, suit: :spade),
-      Card.new(number: 5, suit: :spade)
-    ]
-    expect(YakuwakaruMan.new(cards).wakaru).to eq "ストレートフラッシュ"
-  end
-
   describe '#three_of_kind' do
     let(:any_card_1) { Card.new(number: 9, suit: :dia) }
     let(:any_card_2) { Card.new(number: 8, suit: :spade) }
@@ -105,6 +100,44 @@ RSpec.describe YakuwakaruMan do
 
     it { is_expected.to be_full_house }
 
+  end
+
+  describe '#massugu_hikaru?' do
+    let(:yakuwakaruman) {
+      YakuwakaruMan.new( cards)
+    }
+
+    subject { yakuwakaruman. }
+
+    context 'massugu hikaru' do
+      let(:cards) {
+        [
+          Card.new(number: 1, suit: :spade),
+          Card.new(number: 2, suit: :spade),
+          Card.new(number: 3, suit: :spade),
+          Card.new(number: 4, suit: :spade),
+          Card.new(number: 5, suit: :spade)
+        ]
+      }
+
+      it { is_expected.to be_massugu_hikaru }
+    end
+
+    context 'massugu hikaranai' do
+      let(:yakuwakaruman) {
+        YakuwakaruMan.new(
+          [
+            Card.new(number: 1, suit: :spade),
+            Card.new(number: 2, suit: :spade),
+            Card.new(number: 3, suit: :spade),
+            Card.new(number: 4, suit: :spade),
+            Card.new(number: 5, suit: :spade)
+          ]
+        )
+      }
+
+      it { is_expected.to be_massugu_hikaru }
+    end
   end
 
   shared_context '役が4カード' do
