@@ -32,7 +32,12 @@ class YakuwakaruMan
   end
 
   def wakaru
-    "ストレートフラッシュ"
+    case
+    when four_of_kind?
+      'フォーカード'
+    else
+      '🐷'
+    end
   end
 
   def four_of_kind?
@@ -57,7 +62,14 @@ end
 
 RSpec.describe YakuwakaruMan do
   it do
-    expect(YakuwakaruMan.new(%w(s1 s2 s3 s4 s5)).wakaru).to eq "ストレートフラッシュ"
+    cards = [
+      Card.new(number: 1, suit: :spade),
+      Card.new(number: 2, suit: :spade),
+      Card.new(number: 3, suit: :spade),
+      Card.new(number: 4, suit: :spade),
+      Card.new(number: 5, suit: :spade)
+    ]
+    expect(YakuwakaruMan.new(cards).wakaru).to eq "ストレートフラッシュ"
   end
 
   describe '#three_of_kind' do
@@ -104,20 +116,20 @@ RSpec.describe YakuwakaruMan do
         } << any_card
       )
     }
-
-    subject { yakuwakaruman }
   end
 
   describe '#four_of_kind' do
     include_context '役が4カード'
+    subject { yakuwakaruman }
 
     it { is_expected.to be_four_of_kind }
   end
 
   describe '#wakaru' do
     include_context '役が4カード'
+    subject { yakuwakaruman.wakaru }
 
-    it { is_expected.to wakaru }
+    it { is_expected.to eq 'フォーカード' }
   end
 end
 
@@ -131,15 +143,6 @@ class Player
     YakuwakaruMan.new(@hand).wakaru
   end
 end
-
-RSpec.describe Player do
-  let(:player) { Player.new }
-
-  describe '#yaku' do
-    it { expect(player.yaku).to eq 'ストレートフラッシュ' }
-  end
-end
-
 
 class Deck
   SUITES = %i{club heart spade dia}
