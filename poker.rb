@@ -17,7 +17,7 @@ end
 RSpec.describe Poker do
   describe '#hajimeru' do
     let(:poker) { Poker.new }
-    it { expect(subject..player1).to be_a Player }
+    it { expect(subject.player1).to be_a Player }
   end
 
   describe '#hajimeru' do
@@ -34,11 +34,30 @@ class YakuwakaruMan
   def wakaru
     "ストレートフラッシュ"
   end
+
+  def four_of_kind?
+    # [1,1,1,1,x]
+    @cards.map(&:number).uniq.count == 2
+  end
 end
 
 RSpec.describe YakuwakaruMan do
   it do
     expect(YakuwakaruMan.new(%w(s1 s2 s3 s4 s5)).wakaru).to eq "ストレートフラッシュ"
+  end
+
+  describe '#four_of_kind' do
+    pending 'wip'
+
+    let(:yakuwakaruman) {
+      YakuwakaruMan.new(
+        Card::SUITES.map {|suit|
+          Card.new(number: 1, suit: suit)
+        }
+      end
+    }
+
+    # it { expect() }
   end
 end
 
