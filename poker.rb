@@ -29,3 +29,9 @@ RSpec.describe Player do
     it { expect(subject.hand.size).to eq(5) }
   end
 end
+
+RSpec.describe Card do
+  describe '.new' do
+    it { expect(suit)}
+  end
+end
