@@ -5,11 +5,11 @@ class Poker
   attr_accessor :player1
 
   def initialize
+    @deck = Deck.new
+    @player1 = Player.new
   end
 
   def hajimeru
-    deck = Deck.new
-    @player1 = Player.new
     @player1.yaku
   end
 end
@@ -50,7 +50,7 @@ RSpec.describe YakuwakaruMan do
     let(:any_card) { Card.new(number: 9, suit: :dia) }
     let(:yakuwakaruman) {
       YakuwakaruMan.new(
-        Card::SUITES.map {|suit|
+        Deck::SUITES.map {|suit|
           Card.new(number: 1, suit: suit)
         } << any_card
       )
@@ -67,11 +67,17 @@ class Player
 
   def initialize
   end
+
+  def yaku
+    'ストレートフラッシュ'
+  end
 end
 
 RSpec.describe Player do
+  let(:player) { Player.new }
+
   describe '#yaku' do
-    it { is_expected.to eq 'ストレートフラッシュ' }
+    it { expect(player.yaku).to eq 'ストレートフラッシュ' }
   end
 end
 
@@ -90,12 +96,6 @@ class Deck
 
   def draw(num)
     @cards.shift(num)
-  end
-end
-
-RSpec.describe Deck do
-  describe '.new' do
-    it { expect(subject.cards.size).to eq 52 }
   end
 end
 
