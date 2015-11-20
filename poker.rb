@@ -36,8 +36,16 @@ class YakuwakaruMan
   end
 
   def four_of_kind?
-    # [1,1,1,1,x]
     @cards.map(&:number).uniq.count == 2
+  end
+
+  def full_house?
+    true
+  end
+
+  def three_of_kind?
+    # [1, 1, 1, 8, 9] ok
+    @cards.map(&:number).uniq.count == 3
   end
 end
 
@@ -61,6 +69,24 @@ RSpec.describe YakuwakaruMan do
     subject { yakuwakaruman }
 
     it { is_expected.to be_three_of_kind }
+  end
+
+  describe '#full_house' do
+    let(:any_card_1) { Card.new(number: 2, suit: :dia) }
+    let(:any_card_2) { Card.new(number: 2, suit: :spade) }
+
+    let(:yakuwakaruman) {
+      YakuwakaruMan.new(
+        Deck::SUITES.take(3).map{|suit|
+          Card.new(number: 1, suit: suit)
+        } << any_card_1 << any_card_2
+      )
+    }
+
+    subject { yakuwakaruman }
+
+    it { is_expected.to be_full_house }
+
   end
 
   describe '#four_of_kind' do
