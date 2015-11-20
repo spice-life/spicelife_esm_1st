@@ -17,6 +17,15 @@ class Player
   end
 end
 
+class Deck
+  def initialize
+    @cards = 53.times.map{ Card.new }
+  end
+  def draw
+    @cards.unshift
+  end
+end
+
 class Card
   def suit
     :heart
@@ -24,6 +33,17 @@ class Card
 
   def number
     10
+  end
+end
+
+class Dealer
+  def initialize
+    @deck = Deck.new
+  end
+
+  # カードを配る
+  def execute
+
   end
 end
 
@@ -49,6 +69,6 @@ end
 
 RSpec.describe Dealer do
   describe '#execute' do
-
+    it { expect(subject.respond_to?(:execute)).to be }
   end
 end
