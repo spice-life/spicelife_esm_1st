@@ -9,9 +9,20 @@ class Poker
 
   def hajimeru
     deck = Deck.new
-    @player1 = Player.new(deck.draw(5))
+    @player1 = Player.new
+    @player1.yaku
   end
 end
+
+RSpec.describe Poker do
+  describe '.new' do
+    it { expect(subject.player1).to be_a Player }
+  end
+
+  describe '#hajimeru' do
+  end
+end
+
 
 class YakuwakaruMan
   PATTERN = []
@@ -20,24 +31,29 @@ class YakuwakaruMan
   end
 
   def wakaru
-
-    "ストレート・フラッシュ"
+    "ストレートフラッシュ"
   end
 end
 
 RSpec.describe YakuwakaruMan do
   it do
-    expect(YakuwakaruMan.new(%w(s1 s2 s3 s4 s5)).wakaru).to eq "ストレート・フラッシュ"
+    expect(YakuwakaruMan.new(%w(s1 s2 s3 s4 s5)).wakaru).to eq "ストレートフラッシュ"
   end
 end
 
 class Player
   attr_accessor :hand
 
-  def initialize(cards)
-    @hand = cards
+  def initialize
   end
 end
+
+RSpec.describe Player do
+  describe '#yaku' do
+    it { is_expected.to eq 'ストレートフラッシュ' }
+  end
+end
+
 
 class Deck
   SUITES = %i{club heart spade dia}
@@ -79,23 +95,6 @@ class Dealer
   # カードを配る
   def execute(num = 5)
     @deck.draw(num)
-  end
-end
-
-RSpec.describe Poker do
-  describe '.new' do
-    it { expect(subject.player1).to be_a Player }
-  end
-
-  describe '#hajimeru' do
-
-  end
-end
-
-RSpec.describe Player do
-  describe '.new' do
-    it { expect(subject.hand).to be_a Array }
-    it { expect(subject.hand.size).to eq(5) }
   end
 end
 
