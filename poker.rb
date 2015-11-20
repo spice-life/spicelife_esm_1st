@@ -62,7 +62,9 @@ class YakuwakaruMan
   end
 
   def massugu_hikaru?
-    true
+    @cards.map(&:suit).uniq.count == 1 &&
+      @cards.map(&:number).uniq.count == 5 &&
+      @cards.map(&:number).sort.last - @cards.map(&:number).sort.first == 4
   end
 end
 
@@ -103,11 +105,9 @@ RSpec.describe YakuwakaruMan do
   end
 
   describe '#massugu_hikaru?' do
-    let(:yakuwakaruman) {
-      YakuwakaruMan.new( cards)
-    }
+    let(:yakuwakaruman) { YakuwakaruMan.new(cards) }
 
-    subject { yakuwakaruman. }
+    subject { yakuwakaruman }
 
     context 'massugu hikaru' do
       let(:cards) {
@@ -124,19 +124,17 @@ RSpec.describe YakuwakaruMan do
     end
 
     context 'massugu hikaranai' do
-      let(:yakuwakaruman) {
-        YakuwakaruMan.new(
-          [
-            Card.new(number: 1, suit: :spade),
-            Card.new(number: 2, suit: :spade),
-            Card.new(number: 3, suit: :spade),
-            Card.new(number: 4, suit: :spade),
-            Card.new(number: 5, suit: :spade)
-          ]
-        )
+      let(:cards) {
+        [
+          Card.new(number: 1, suit: :spade),
+          Card.new(number: 2, suit: :spade),
+          Card.new(number: 50000, suit: :spade),
+          Card.new(number: 4, suit: :spade),
+          Card.new(number: 5, suit: :spade)
+        ]
       }
 
-      it { is_expected.to be_massugu_hikaru }
+      it { is_expected.not_to be_massugu_hikaru }
     end
   end
 
