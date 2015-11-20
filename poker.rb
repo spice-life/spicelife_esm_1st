@@ -15,8 +15,9 @@ class Poker
 end
 
 RSpec.describe Poker do
-  describe '.new' do
-    it { expect(subject.player1).to be_a Player }
+  describe '#hajimeru' do
+    let(:poker) { Poker.new }
+    it { expect(subject..player1).to be_a Player }
   end
 
   describe '#hajimeru' do
