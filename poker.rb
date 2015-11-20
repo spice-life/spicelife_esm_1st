@@ -42,8 +42,8 @@ class Dealer
   end
 
   # カードを配る
-  def execute
-
+  def execute(num = 5)
+    @deck.take(num)
   end
 end
 
@@ -69,6 +69,12 @@ end
 
 RSpec.describe Dealer do
   describe '#execute' do
-    it { expect(subject.respond_to?(:execute)).to be }
+    let(:num) { 5 }
+
+    subject {
+      Dealer.new.execute(num)
+    }
+
+    it { expect(subject.size).to eq 5 }
   end
 end
