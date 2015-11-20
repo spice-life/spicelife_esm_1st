@@ -7,6 +7,9 @@ class Poker
   def initialize
     @player1 = Player.new
   end
+
+  def kubaru
+  end
 end
 
 class Player
@@ -14,6 +17,16 @@ class Player
 
   def initialize
     @hand = Array.new(5)
+  end
+end
+
+class Card
+  def suit
+    :heart
+  end
+
+  def number
+    10
   end
 end
 
@@ -32,6 +45,7 @@ end
 
 RSpec.describe Card do
   describe '.new' do
-    it { expect(suit)}
+    it { expect(subject.suit).to eq(:heart) }
+    it { expect(subject.number).to eq(10) }
   end
 end
