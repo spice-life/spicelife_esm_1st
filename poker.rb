@@ -9,6 +9,24 @@ class Poker
   end
 end
 
+class YakuwakaruMan
+  PATTERN = [] 
+  def initialize(cards)
+    @cards = cards
+  end
+
+  def wakaru
+
+    "ストレート・フラッシュ"
+  end
+end
+
+RSpec.describe YakuwakaruMan do
+  it do
+    expect(YakuwakaruMan.new(%w(s1 s2 s3 s4 s5)).wakaru).to eq "ストレート・フラッシュ"
+  end
+end
+
 class Player
   attr_accessor :hand
 
@@ -39,7 +57,6 @@ RSpec.describe Deck do
     it { expect(subject.cards.size).to eq 52 }
   end
 end
-
 
 class Card
   attr_reader :suit, :number
