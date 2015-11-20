@@ -46,6 +46,23 @@ RSpec.describe YakuwakaruMan do
     expect(YakuwakaruMan.new(%w(s1 s2 s3 s4 s5)).wakaru).to eq "ストレートフラッシュ"
   end
 
+  describe '#three_of_kind' do
+    let(:any_card_1) { Card.new(number: 9, suit: :dia) }
+    let(:any_card_2) { Card.new(number: 8, suit: :spade) }
+
+    let(:yakuwakaruman) {
+      YakuwakaruMan.new(
+        Deck::SUITES.take(3).map{|suit|
+          Card.new(number: 1, suit: suit)
+        } << any_card_1 << any_card_2
+      )
+    }
+
+    subject { yakuwakaruman }
+
+    it { is_expected.to be_three_of_kind }
+  end
+
   describe '#four_of_kind' do
     let(:any_card) { Card.new(number: 9, suit: :dia) }
     let(:yakuwakaruman) {
@@ -69,7 +86,7 @@ class Player
   end
 
   def yaku
-    'ストレートフラッシュ'
+    YakuwakaruMan.new(@hand).wakaru
   end
 end
 
