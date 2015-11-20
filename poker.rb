@@ -19,20 +19,21 @@ end
 
 class Deck
   def initialize
-    @cards = 53.times.map{ Card.new }
+    %i{club heart spade dia}.each{}
+    @cards = 53.times.map{ Card.new(suit: :heart, number: 1) }
   end
-  def draw
-    @cards.unshift
+
+  def draw(num)
+    @cards.shift(num)
   end
 end
 
 class Card
-  def suit
-    :heart
-  end
+  attr_reader :suit, :number
 
-  def number
-    10
+  def initialize(suit:, number:)
+    @suit   = suit
+    @number = number
   end
 end
 
@@ -43,7 +44,7 @@ class Dealer
 
   # カードを配る
   def execute(num = 5)
-    @deck.take(num)
+    @deck.draw(num)
   end
 end
 
@@ -62,8 +63,15 @@ end
 
 RSpec.describe Card do
   describe '.new' do
-    it { expect(subject.suit).to eq(:heart) }
-    it { expect(subject.number).to eq(10) }
+    subject { Card.new(suit: suit, number: number) }
+
+    context 'club 1' do
+      let(:suit)   { :club }
+      let(:number) { 1 }
+
+      it { expect(subject.suit).to eq :club }
+      it { expect(subject.number).to eq 1 }
+    end
   end
 end
 
