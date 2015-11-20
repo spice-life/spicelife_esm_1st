@@ -18,15 +18,28 @@ class Player
 end
 
 class Deck
+  SUITES = %i{club heart spade dia}
+  NUMBERS = 1..13
   def initialize
-    %i{club heart spade dia}.each{}
-    @cards = 53.times.map{ Card.new(suit: :heart, number: 1) }
+    @cards = []
+    SUITES.each do |suit|
+      NUMBERS.each do |number|
+        @cards << Card.new(suit: suit, number: number)
+      end
+    end
   end
 
   def draw(num)
     @cards.shift(num)
   end
 end
+
+RSpec.describe Deck do
+  describe '.new' do
+    it { expect(subject.cards.size).to eq 52 }
+  end
+end
+
 
 class Card
   attr_reader :suit, :number
